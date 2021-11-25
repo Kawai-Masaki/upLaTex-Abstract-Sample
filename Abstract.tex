@@ -1,0 +1,105 @@
+\documentclass[uplatex,a4paper,twocolumn,8pt,dvipdfmx]{jsarticle}
+
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{diagbox} % 旧\usepackage{slashbox}
+\usepackage{wrapfig}
+\usepackage{setspace}
+\usepackage{latexsym}
+\usepackage{tabularx} % Table用
+\usepackage{multicol} % セル結合用
+\usepackage{multirow} % セル結合用
+% \AtBeginDvi{\special{pdf:mapfile msmingoth.map}} % WindowsでMS明朝を使うとき用
+
+\usepackage[top=10truemm,bottom=20truemm,left=16truemm,right=16truemm]{geometry}
+
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+
+\title{uplatexを使った2段組文書作成}		%タイトル
+\author{Haruka \thanks{国立高等専門学校 全知全能科}}
+\date{2021年11月26日}
+\begin{document} 
+\maketitle
+%タイトル
+
+%本文
+\section{はじめに}
+最近は Over Leaf 等のオンラインの\LaTeX サービスがあるので，
+それらを使うといいと思うが画像のコンパイル等が重くなるので
+やっぱりローカルで環境を作ったほうがいいかもしれない．
+upLaTex は Unicode が使えるので記号等の問題が少ないのがメリットかもしれない．
+
+
+% \vspace{-0.5zh} % ちょっと行間を詰めた
+\section{関連研究}
+既存研究として，Vinyalsら\cite{Vinyals2015ShowAT}は，
+畳み込みニューラルネットワーク（CNN）と
+再起型ニューラルネットワーク（RNN）を用いた
+エンコーダー・デコーダー構造により，
+画像特徴とキャプションから，文の生成を学習する手法を提案している．
+
+\section{提案手法}
+Vinyalsらの提案するImage Captioningのエンコーダー・デコーダー構造を参考に，
+人間を用いた人力キャプション生成を提案する（図\ref{fig:model}）．
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\linewidth]{fig/human_captioning.jpg}
+    \caption{絵を見て内容を言語にて回答}
+    \label{fig:model}
+\end{figure}
+
+\section{生成実験}
+友達と協力させる人力キャプション生成を実装する（図\ref{fig:ours_fr}）．
+既存手法としてVinyalsらの手法（NIC）と，人力キャプション生成モデル，
+それに友人を導入したと友人協力モデルを比較した．
+表\ref{tb:score}に示すように，人力キャプション生成モデルの方が
+著しく高いスコアとなった．
+また，友人協力モデルは最も高い評価となったものの，
+人力キャプション生成モデルと比較すると差はわずかである．
+% 表をトップに配置される
+\begin{table}[tbp]
+    \centering
+    \small
+    \caption{評価用データセットに対するキャプション生成の品質．
+            1,2,3,4は$n$-gramsを使ったBleuスコア．
+            数値が高いほどGround Truthとの類似度が高い．
+            Ours+Fはモデルと友人（Friend）を相談させるネットワークとする．
+            }
+    \begin{tabular}{ L{1.0cm}  *{4}{C{0.5cm}}  C{0cm}  *{3}{C{0.55cm}} }
+        %   \hline
+        \hline
+        & \multicolumn{4}{c}{Bleu} && \multicolumn{3}{c}{Bert} \\
+        \cline{2-5}\cline{7-9}
+                    &  1 &  2 &  3 &  4 &&  P &  R &  F1\\  \hline
+        NIC\cite{Vinyals2015ShowAT} &  0.113 &  0.018 &  0.001 &  0.000 &&  0.856 &  0.878 &  0.867\\ 
+        Ours                        &  {\bf 1.00} &  0.990 &  0.980 &  0.900 &&  0.990 &  0.990 &  0.990\\ 
+        Ours+Fr                 &  {\bf 1.00} &  {\bf 1.00} &  {\bf 0.999} &  {\bf 0.990} &&  {\bf 0.999} &  {\bf 0.999} &  {\bf 0.999}\\ 
+        \hline
+    \end{tabular}
+    \label{tb:score}
+\end{table}
+
+\begin{figure}[tbp]
+    \centering
+    \vspace{0.3cm}
+    \includegraphics[clip, width=0.8\linewidth]{fig/kids_katawokumu.png}
+    \caption{友人と協力モデル（Ours+Fr）の図}
+    \label{fig:ours_fr}
+    \vspace{-0.5cm}
+\end{figure}
+
+\section{まとめ・今後の課題}
+完璧すぎてありません．
+
+\renewcommand{\refname}{参考文献}
+
+%% 参考文献
+%% アルファベット順(五十音順)
+%\bibliographystyle{jplain}
+%% 参照順
+\bibliographystyle{junsrt}
+\bibliography{mybib}
+
+
+\end{document}

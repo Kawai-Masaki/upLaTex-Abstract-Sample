@@ -1,3 +1,12 @@
+**/*.aux
+**/*.bbl
+**/*.blg
+**/*.dvi
+**/*.fdb_*
+**/*.fls
+**/*.gz
+**/*.log
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
