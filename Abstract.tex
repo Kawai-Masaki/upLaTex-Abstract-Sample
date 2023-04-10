@@ -1,6 +1,8 @@
 \documentclass[twocolumn,8pt]{jsarticle}
 
-\usepackage[dvipdfmx]{graphicx}
+\usepackage{graphicx}
+\usepackage[dvipdfmx]{color}
+\usepackage{here} %図の位置を固定
 \usepackage{diagbox} % 旧\usepackage{slashbox}
 \usepackage{wrapfig}
 \usepackage{setspace}
@@ -42,7 +44,7 @@ upLaTex は Unicode が使えるので記号等の問題が少ないのがメリ
 \section{提案手法}
 Vinyalsらの提案するImage Captioningのエンコーダー・デコーダー構造を参考に，
 人間を用いた人力キャプション生成を提案する（図\ref{fig:model}）．
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{fig/human_captioning.jpg}
     \caption{絵を見て内容を言語にて回答}
@@ -58,7 +60,7 @@ Vinyalsらの提案するImage Captioningのエンコーダー・デコーダー
 また，友人協力モデルは最も高い評価となったものの，
 人力キャプション生成モデルと比較すると差はわずかである．
 % 表をトップに配置される
-\begin{table}[tbp]
+\begin{table}[H]
     \centering
     \small
     \caption{評価用データセットに対するキャプション生成の品質．
@@ -80,12 +82,12 @@ Vinyalsらの提案するImage Captioningのエンコーダー・デコーダー
     \label{tb:score}
 \end{table}
 
-\begin{figure}[tbp]
+\begin{figure}[H]
     \centering
     \vspace{0.3cm}
     \includegraphics[clip, width=0.8\linewidth]{fig/kids_katawokumu.png}
     \caption{友人と協力モデル（Ours+Fr）の図}
-    \label{fig:ours_fr}
+    \label{fig:ours_fr}H
     \vspace{-0.5cm}
 \end{figure}
 
